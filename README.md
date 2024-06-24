@@ -22,7 +22,7 @@ A tool to help you restore mate pen functionality on Windows.
 
 ### Download
 
-文件位于bin\<ARCH>下
+文件位于bin\\<ARCH>下
 使用VS2022构建。MATE E 非GO设备下载X64架构，GO设备下载ARM64EC架构。
 
 
