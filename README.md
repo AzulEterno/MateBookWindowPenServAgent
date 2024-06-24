@@ -11,7 +11,8 @@ A tool to help you restore mate pen functionality on Windows.
 
 ## Note
 ### Usage
-
+你需要保证笔服务文件存在
+"C:\Program Files\Huawei\PCManager\components\accessories_center\accessories_app\AccessoryApp\Lib\Plugins\Depend\PenService.dll"
 你需要停止所有原生的笔服务才能有效使用该应用程序，包括APP_Accessory 等。
 推荐你顺便停止电脑管家运行。该程序自带HiView信息流不可关闭。
 **Windows Widgets信息流都不好意思不给开关你怎么好意思的。**
@@ -31,3 +32,8 @@ A tool to help you restore mate pen functionality on Windows.
 本人精力有限，仅稍微实现了基本功能切换。如果有人能够逆向工程如何获得笔的状态欢迎告诉我。
 可以编写ARM64EC UI界面以完全替代APP_Accessory.
 
+### Reference
+
+[Python Implementation](https://github.com/qwqVictor/HuaweiPenEraserService/blob/master/eraser_service.py)
+
+[C++ Implementation](https://github.com/eiyooooo/MateBook-E-Pen)
