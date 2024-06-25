@@ -94,6 +94,69 @@ namespace PencilNotifyWindows {
         float GetWindowAlphaValue() const {
             return blendFunction.SourceConstantAlpha / static_cast<float>(0xFF);
         }
+
+        bool UpdateDPIValue() {
+            UINT32 newDPI = GetDpiForWindow(
+                _hWnd
+            );
+            if (newDPI!= _DPI_Value) {
+                _DPI_Value = newDPI;
+                AutoResizeWindow();
+
+                SIZE screenRealSize = GetRealScreenSize();
+                SIZE realWindowSize = GetRealWindowSize();
+                // Create a rounded-rectangle region for the window shape
+                HRGN hRgn = CreateRoundRectRgn(0, 0,
+                    realWindowSize.cx, realWindowSize.cy,
+                    30*GetDPIScale(), 30 * GetDPIScale()); // Adjust the radius as needed
+                SetWindowRgn(_hWnd, hRgn, TRUE);
+                DeleteObject(hRgn);
+                return true;
+            }
+            return false;
+        }
+        bool SetWindowLogicSize(SIZE newSize) {
+            
+            if (newSize.cx > 0 && newSize.cy > 0 &&
+                (newSize.cx != wndLogicSize.cx || newSize.cy != wndLogicSize.cy)){
+                wndLogicSize.cx = newSize.cx;
+                wndLogicSize.cy = newSize.cy;
+                return true;
+            }
+            return false;
+        }
+        bool AutoResizeWindow() {
+            SIZE screenRealSize = GetRealScreenSize();
+            SIZE realWindowSize = GetRealWindowSize();
+
+
+            POINT screenPos = { (screenRealSize.cx - realWindowSize.cx) / 2 ,
+            (screenRealSize.cy - realWindowSize.cy) / 2 };
+            return UpdateLayeredWindow(_hWnd, NULL,
+                &screenPos ,
+                &realWindowSize, NULL,
+                NULL, RGB(255, 255, 255),
+                &blendFunction, ULW_ALPHA);
+        }
+
+        float GetDPIScale() const {
+
+            float val = static_cast<float>(_DPI_Value) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
+            return val;
+        }
+
+        SIZE GetRealWindowSize() {
+            SIZE rSize = { wndLogicSize.cx *GetDPIScale(), wndLogicSize.cy*GetDPIScale()};
+            //std::wcout << "WndSizeX " << rSize.cx << ", WndSizeY " << rSize.cy << std::endl;
+            return rSize;
+            
+        }
+
+        SIZE GetRealScreenSize() {
+            SIZE sSize = { GetSystemMetrics(SM_CXSCREEN) ,
+                GetSystemMetrics(SM_CYSCREEN) };
+            return sSize;
+        }
     protected:
         static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
         static HICON _penModeIcon, _eraserModeIcon;
@@ -109,8 +172,11 @@ namespace PencilNotifyWindows {
         HRESULT ApplyBlurEffect(HWND hwnd);
 
         HRESULT ApplySystemBackdrop(HWND const& hwnd, DWM_SYSTEMBACKDROP_TYPE const& bd_type);
-        
-        int _width = 0, _height = 0, _fadeAnimationState = 0;
+        int _fadeAnimationState = 0;
+
+        SIZE wndLogicSize = {150,150};
+        UINT32 
+            _DPI_Value = USER_DEFAULT_SCREEN_DPI/2;
 
         UINT32 _fadeAnimationDurationMilliseconds = 200;
         float _fadeStepValue = 1.0/((float)_fadeAnimationDurationMilliseconds / (float)_fadeAnimationIntervalMilliseconds);
@@ -146,11 +212,11 @@ namespace PencilNotifyWindows {
         static const wchar_t CLASS_NAME[];
     };
 
-    class GDIPlusBlurBackgroundWindow : public PencilModeChangeNotifyWindow {
-    protected:
-        Gdiplus::GdiplusStartupInput _gdiplusStartupInput;
-        //Gdiplus::GdiplusToken _gdiplusToken;
+    //class GDIPlusBlurBackgroundWindow : public PencilModeChangeNotifyWindow {
+    //protected:
+    //    Gdiplus::GdiplusStartupInput _gdiplusStartupInput;
+    //    //Gdiplus::GdiplusToken _gdiplusToken;
 
-    };
+    //};
 
 }

@@ -137,48 +137,48 @@
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <PublicModuleDirectories>$(PublicModuleDirectories)</PublicModuleDirectories>
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <PublicModuleDirectories>$(PublicModuleDirectories)</PublicModuleDirectories>
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <PublicModuleDirectories>$(PublicModuleDirectories)</PublicModuleDirectories>
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <PublicModuleDirectories>$(PublicModuleDirectories)</PublicModuleDirectories>
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -193,6 +193,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -211,6 +214,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -225,6 +231,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -243,6 +252,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
@@ -257,6 +269,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">
     <ClCompile>
@@ -271,6 +286,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
@@ -289,6 +307,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
     <ClCompile>
@@ -307,6 +328,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
+    <Manifest>
+      <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DLL_Loader.cpp" />

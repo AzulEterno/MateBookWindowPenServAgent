@@ -12,7 +12,7 @@ int DoMessageMonitorJob(HINSTANCE hInstance, int nCmdShow) {
     PencilModeChangeNotifyWindow::InitIconData(hInstance);
     PencilModeChangeNotifyWindow window(hInstance);
 
-    if (!window.Create(L"Blur Background Window", L"Information Text", 200, 200)) {
+    if (!window.Create(L"Blur Background Window", L"Information Text", 150, 150)) {
         return 0;
     }
 
@@ -21,11 +21,12 @@ int DoMessageMonitorJob(HINSTANCE hInstance, int nCmdShow) {
 
     window.AlterTransparency(0.0);
 
+    PencilKeyReflex::pencilStatusManagerPtr = new PencilKeyReflex::HuaweiPencilStatusManager(L"PenService.dll");
 
-    auto penServiceDll = PencilKeyReflex::pencilStatusManager.GetDllInvoker();
+    auto penServiceDll = PencilKeyReflex::pencilStatusManagerPtr->GetDllInvoker();
 
 
-    PencilKeyReflex::pencilStatusManager.AssociateNotifyWindow(&window);
+    PencilKeyReflex::pencilStatusManagerPtr->AssociateNotifyWindow(&window);
 
     if (!use_set_windows_hook_ex) {
         int result = PencilKeyReflex::RegisterHotkeyFunctions();
@@ -42,7 +43,7 @@ int DoMessageMonitorJob(HINSTANCE hInstance, int nCmdShow) {
     }
     // Message loop
     MSG msg = {};
-    while (GetMessage(&msg, nullptr, 0, 0)) {
+    while (PencilKeyReflex::isRunning &&GetMessage(&msg, nullptr, 0, 0)) {
         if (!use_set_windows_hook_ex && msg.message == WM_HOTKEY) {
             PencilKeyReflex::HandleHotkeyEvent(msg);
 
@@ -57,6 +58,7 @@ int DoMessageMonitorJob(HINSTANCE hInstance, int nCmdShow) {
     PencilKeyReflex::Unhook();
     window.Hide();
     window.Destroy();
+    delete PencilKeyReflex::pencilStatusManagerPtr;
     PencilModeChangeNotifyWindow::ReleaseIconData();
     return 0;
 }

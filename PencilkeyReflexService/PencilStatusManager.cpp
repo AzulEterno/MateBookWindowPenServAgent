@@ -12,6 +12,7 @@ namespace PencilKeyReflex{
     }
 
     bool isDebugMode = false;
+    bool isRunning = true;
     HHOOK hHook = NULL;
-    HuaweiPencilStatusManager pencilStatusManager;
+    HuaweiPencilStatusManager * pencilStatusManagerPtr = nullptr;
 }

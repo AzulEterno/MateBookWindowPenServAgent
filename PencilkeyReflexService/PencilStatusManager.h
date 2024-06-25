@@ -80,9 +80,9 @@ namespace PencilKeyReflex{
 	};
 
     extern HHOOK hHook;
-    extern bool isDebugMode;
+    extern bool isDebugMode,isRunning;
 
-    extern HuaweiPencilStatusManager pencilStatusManager;
+    extern HuaweiPencilStatusManager *pencilStatusManagerPtr;
     // Function to register the hotkey
     static int RegisterHotkeyFunctions() {
         // Register CTRL + SHIFT + H as the hotkey
@@ -133,7 +133,10 @@ namespace PencilKeyReflex{
                     if (isDebugMode) {
                         std::wcout << "Pencil Double click triggered." << std::endl;
                     }
-                    pencilStatusManager.SwitchPencilModeCall();
+                    if (pencilStatusManagerPtr){
+                        pencilStatusManagerPtr->SwitchPencilModeCall();
+                    }
+                    
                 }
             }
         }
@@ -169,5 +172,10 @@ namespace PencilKeyReflex{
 
             }
         }
+    }
+
+    static void StopMessageLoop() {
+        isRunning = false;
+
     }
 }

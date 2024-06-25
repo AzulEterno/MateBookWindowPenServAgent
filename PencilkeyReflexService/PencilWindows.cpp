@@ -31,20 +31,21 @@ namespace PencilNotifyWindows {
             return false;
         }
 
-        _width = width;
-        _height = height;
 
-        int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-        int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        int xPos = (screenWidth - _width) / 2;
-        int yPos = (screenHeight - _height) / 2;
+        SIZE _wndLogicSize = { width,height };
+        SetWindowLogicSize(_wndLogicSize);
+
+        SIZE screenSize = GetRealScreenSize();
+        SIZE windowSize = GetRealWindowSize();
+        int xPos = (screenSize.cx - windowSize.cx) / 2;
+        int yPos = (screenSize.cy - windowSize.cy) / 2;
 
         _hWnd = CreateWindowEx(
             WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE | WS_EX_LAYERED,
             CLASS_NAME,
             windowTitle,
             WS_POPUP,
-            xPos, yPos, width, height,
+            xPos, yPos, screenSize.cx, screenSize.cy,
             NULL,
             NULL,
             _hInstance,
@@ -55,6 +56,8 @@ namespace PencilNotifyWindows {
             return false;
         }
 
+        UpdateDPIValue();
+
         // Apply blur effect
         DWM_BLURBEHIND bb = {};
         bb.dwFlags = DWM_BB_ENABLE;
@@ -63,10 +66,7 @@ namespace PencilNotifyWindows {
         DwmEnableBlurBehindWindow(_hWnd, &bb);
 
         
-        // Create a rounded-rectangle region for the window shape
-        HRGN hRgn = CreateRoundRectRgn(0, 0, _width, _height, 30, 30); // Adjust the radius as needed
-        SetWindowRgn(_hWnd, hRgn, TRUE);
-        DeleteObject(hRgn);
+       
         //HRESULT hr = ApplySystemBackdrop(_hWnd, DWM_SYSTEMBACKDROP_TYPE::DWMSBT_MAINWINDOW);
         //if (FAILED(hr)) {
         //    return false;
@@ -134,42 +134,45 @@ namespace PencilNotifyWindows {
     }
 
     void PencilModeChangeNotifyWindow::OnPaint() {
-        HDC hdcScreen = GetDC(NULL);
+        HDC hdcScreen = GetDC(_hWnd);
         HDC hdcMem = CreateCompatibleDC(hdcScreen);
+        SIZE realWindowSize = GetRealWindowSize();
 
-        HBITMAP hbmMem = CreateCompatibleBitmap(hdcScreen, _width, _height);
+        RECT wndRect = { 0, 0, realWindowSize.cx, realWindowSize.cy };
+        HBITMAP hbmMem = CreateCompatibleBitmap(hdcScreen,
+            realWindowSize.cx, realWindowSize.cy);
         HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbmMem);
 
         // Fill the background with transparency
         HBRUSH hBrush = CreateSolidBrush(bg_color);
-        RECT rect = { 0, 0, _width, _height };
-        FillRect(hdcMem, &rect, hBrush);
+
+
+        FillRect(hdcMem, &wndRect, hBrush);
         DeleteObject(hBrush);
 
         // Set text properties
-        SetTextColor(hdcMem, RGB(255, 255, 0));
+        SetTextColor(hdcMem, RGB(10, 10, 10));
         SetBkMode(hdcMem, TRANSPARENT);
 
         // Draw text
         //DrawText(hdcMem, _infoText.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
         if (_displayIconPtr)
         {
-            int iconWidth = _width*0.9;  // Specify your desired icon width
-            int iconHeight = _height * 0.9;
+            int iconWidth = realWindowSize.cx*0.9;  // Specify your desired icon width
+            int iconHeight = realWindowSize.cy * 0.9;
             // Draw the icon
-            int x = (_width - iconWidth) / 2;
-            int y = (_height - iconHeight) / 2;
-        DrawIconEx(hdcMem, x, y, *_displayIconPtr, iconWidth, iconHeight,
+            int pX = (realWindowSize.cx - iconWidth) / 2;
+            int pY = (realWindowSize.cy - iconHeight) / 2;
+        DrawIconEx(hdcMem, pX, pY, *_displayIconPtr, iconWidth, iconHeight,
             0, NULL, DI_NORMAL);
                 
             
         }
          
-        SIZE sizeWnd = { _width, _height };
         POINT ptSrc = { 0, 0 };
 
         UpdateLayeredWindow(_hWnd, hdcScreen, NULL,
-            &sizeWnd, hdcMem,
+            &realWindowSize, hdcMem,
             &ptSrc, RGB(255, 255, 255),
             &blendFunction, ULW_ALPHA);
 
@@ -212,7 +215,7 @@ namespace PencilNotifyWindows {
         }
 
         SetTimer(_hWnd, static_cast<WPARAM>(PencilModeChangeNotifyTimerMessage::FADE_ANIMATION),
-            _fadeAnimationIntervalMilliseconds, NULL);
+            _fadeAnimationIntervalMilliseconds, nullptr);
     }
 
     void PencilModeChangeNotifyWindow::Hide() {
@@ -262,6 +265,9 @@ namespace PencilNotifyWindows {
 
         if (pThis) {
             switch (uMsg) {
+            case WM_DPICHANGED:
+                pThis->UpdateDPIValue();
+                break;
             case WM_PAINT:
                 pThis->OnPaint();
                 break;
