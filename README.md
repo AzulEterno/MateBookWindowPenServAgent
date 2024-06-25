@@ -21,6 +21,8 @@ A tool to help you restore mate pen functionality on Windows.
 ![image](https://github.com/AzulEterno/MatePadWindowPenServAgent/assets/75287037/d19427df-0e30-446b-888c-6ac92319b00a)
 如果使用其作为宿主，可能难以关闭该程序。
 
+**这边建议你笔和键盘连好后直接删除电脑管家以获得最佳体验。**
+
 ### Download
 
 文件位于bin\\<ARCH>下
