@@ -1,9 +1,9 @@
-# MatePadWindowPenServAgent
+# MateBook WindowPenServAgent
 A tool to help you restore mate pen functionality on Windows.
 
 
 ## Reason
-某为MatePadEGo 2023是一个极具性价比的WOA设备。但是其用户态的笔驱动经常为人保守诟病。 不光有白名单限制而且会产生大量的日志文件。
+某为Matebook E Go 2023是一个极具性价比的WOA设备。但是其用户态的笔驱动经常为人保守诟病。 不光有白名单限制而且会产生大量的日志文件。
 本程序在于尽可能映射双击操作使其尽可能还原Windows 原生设置。
 本程序未在MATE E 上测试，但理论上可行。
 
