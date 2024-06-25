@@ -12,7 +12,7 @@ A tool to help you restore mate pen functionality on Windows.
 ## Note
 ### Usage
 你需要保证笔服务文件存在
-"C:\Program Files\Huawei\PCManager\components\accessories_center\accessories_app\AccessoryApp\Lib\Plugins\Depend\PenService.dll"
+"PenService.dll"
 你需要停止所有原生的笔服务才能有效使用该应用程序，包括APP_Accessory 等。
 推荐你顺便停止电脑管家运行。该程序自带HiView信息流不可关闭。
 **Windows Widgets信息流都不好意思不给开关你怎么好意思的。**
